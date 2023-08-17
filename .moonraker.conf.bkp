@@ -13,6 +13,7 @@ cors_domains =
 	http://my.mainsail.xyz
 	http://*.local
 	http://*.lan
+	https://black-lotus.clmntw.fr
 trusted_clients = 
 	10.0.0.0/8
 	127.0.0.0/8
@@ -21,6 +22,7 @@ trusted_clients =
 	192.168.0.0/16
 	FE80::/10
 	::1/128
+	37.44.236.30/32
 
 [octoprint_compat]
 
@@ -29,6 +31,10 @@ trusted_clients =
 [announcements]
 subscriptions = 
 	mainsail
+
+[spoolman]
+server = http://127.0.0.1:7912
+sync_rate = 5
 
 [update_manager]
 refresh_interval = 168
@@ -47,12 +53,23 @@ path = ~/mainsail-config
 origin = https://github.com/mainsail-crew/mainsail-config.git
 managed_services = klipper
 
+[update_manager timelapse]
+type = git_repo
+primary_branch = main
+path = ~/moonraker-timelapse
+origin = https://github.com/mainsail-crew/moonraker-timelapse.git
+managed_services = klipper moonraker
+
+[timelapse]
+output_path = ~/timelapse/
+ffmpeg_binary_path = /usr/bin/ffmpeg
+
 [update_manager crowsnest]
 type = git_repo
 path = ~/crowsnest
 origin = https://github.com/mainsail-crew/crowsnest.git
 managed_services = crowsnest
-install_script = tools/install.sh
+install_script = tools/pkglist.sh
 
 [update_manager sonar]
 type = git_repo
@@ -73,4 +90,18 @@ type = git_repo
 path = /home/clmntw/klipper_z_calibration
 origin = https://github.com/protoloft/klipper_z_calibration.git
 managed_services = klipper
+
+[update_manager moonraker-telegram-bot]
+type = git_repo
+path = ~/moonraker-telegram-bot
+origin = https://github.com/nlef/moonraker-telegram-bot.git
+env = ~/moonraker-telegram-bot-env/bin/python
+requirements = scripts/requirements.txt
+install_script = scripts/install.sh
+
+[update_manager led_effect]
+type = git_repo
+path = ~/klipper-led_effect
+origin = https://github.com/julianschill/klipper-led_effect.git
+is_system_service = False
 
