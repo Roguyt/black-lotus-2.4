@@ -14,6 +14,7 @@ cors_domains =
 	http://*.local
 	http://*.lan
 	https://black-lotus.clmntw.fr
+	null
 trusted_clients = 
 	10.0.0.0/8
 	127.0.0.0/8
