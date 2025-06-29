@@ -4,13 +4,14 @@ CONF_FILE="telegram.conf"
 BACKUP_FILE=".telegram.conf.bak"
 
 if [ -f "$CONF_FILE" ]; then
-  echo "[pre-commit] Scrubbing sensitive data from $CONF_FILE..."
+  echo "[pre-commit] Scrubbing bot_token and chat_id from $CONF_FILE"
 
-  # Backup original config
+  # Save a backup with sensitive data
   cp "$CONF_FILE" "$BACKUP_FILE"
 
-  # Remove lines containing bot_token or chat_id
-  sed -i.bak '/^\s*bot_token\s*:/d;/^\s*chat_id\s*:/d' "$CONF_FILE"
+  # Remove lines containing bot_token or chat_id (Linux-compatible sed)
+  sed -i -e '/^[[:space:]]*bot_token[[:space:]]*:/d' \
+         -e '/^[[:space:]]*chat_id[[:space:]]*:/d' "$CONF_FILE"
 
-  echo "[pre-commit] Sensitive fields removed. Proceeding with commit."
+  echo "[pre-commit] Cleaned up sensitive data."
 fi
