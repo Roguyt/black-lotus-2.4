@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONF_FILE="telegram.conf"
+BACKUP_FILE=".telegram.conf.bak"
+
+if [ -f "$BACKUP_FILE" ]; then
+  echo "[post-commit] Restoring sensitive fields to $CONF_FILE..."
+
+  # Restore from backup
+  mv "$BACKUP_FILE" "$CONF_FILE"
+
+  echo "[post-commit] Restoration complete."
+fi
